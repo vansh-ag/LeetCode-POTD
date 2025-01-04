@@ -1,0 +1,35 @@
+class Solution {
+    public int countPalindromicSubsequence(String s) {
+        int[][] firstLast = new int[26][2];
+        for (int i = 0; i < 26; i++) {
+            firstLast[i][0] = -1; 
+            firstLast[i][1] = -1; 
+        }
+        for (int i = 0; i < s.length(); i++) {
+            int index = s.charAt(i) - 'a';
+            if (firstLast[index][0] == -1) {
+                firstLast[index][0] = i;
+            }
+            firstLast[index][1] = i;
+        }
+        
+        int count = 0;
+        for (int i = 0; i < 26; i++) {
+            int start = firstLast[i][0];
+            int end = firstLast[i][1];
+            if (start != -1 && end - start > 1) {
+                boolean[] seen = new boolean[26];
+                for (int j = start + 1; j < end; j++) {
+                    seen[s.charAt(j) - 'a'] = true;
+                }
+                for (boolean exists : seen) {
+                    if (exists) {
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return count;
+    }
+}
