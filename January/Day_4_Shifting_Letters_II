@@ -1,0 +1,31 @@
+class Solution {
+    public String shiftingLetters(String s, int[][] shifts) {
+        int n = s.length();
+        int[] dif = new int[n];
+        for (int[] query : shifts) {
+            int L = query[0];
+            int R = query[1];
+            int dir = query[2];
+            int x = (dir == 0) ? -1 : 1;
+            
+            dif[L] += x;
+            if (R + 1 < n) {
+                dif[R + 1] -= x;
+            }
+        }
+        for (int i = 1; i < n; i++) {
+            dif[i] += dif[i - 1];
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            int shift = dif[i] % 26;
+            if (shift < 0) {
+                shift += 26; 
+            }
+            char newChar = (char) ((s.charAt(i) - 'a' + shift) % 26 + 'a');
+            result.append(newChar);
+        }
+        
+        return result.toString();
+    }
+}
