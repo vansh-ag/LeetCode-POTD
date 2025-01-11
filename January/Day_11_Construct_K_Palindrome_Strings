@@ -1,0 +1,22 @@
+class Solution {
+    public boolean canConstruct(String s, int k) {
+        int[] st = new int[26];
+        if(s.length()<k){
+            return false;
+        }
+        for(int i =0;i<s.length();i++){
+            st[s.charAt(i)-'a']++;
+        }
+        int oddcount =0;
+        for(int i : st){
+            if(i % 2 != 0){
+                oddcount++;
+            }
+        }
+        if(oddcount>k){
+            return false;
+        }
+        return true;
+        
+    }
+}
